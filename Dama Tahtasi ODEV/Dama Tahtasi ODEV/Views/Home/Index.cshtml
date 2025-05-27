@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Dama Tahtası";
+    Layout = null; // Basit görünüm için layout kaldırıldı
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Dama Tahtası</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            width: 480px;
+            height: 480px;
+            border: 2px solid #000;
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+        }
+
+        .black {
+            background-color: #000;
+        }
+
+        .white {
+            background-color: #fff;
+        }
+
+        .piece {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 10px auto;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Dama Tahtası</h2>
+
+    <div class="board">
+        @{
+            // 8x8 dama tahtasını dinamik olarak oluşturuyoruz
+            for (int row = 0; row < 8; row++)
+            {
+                for (int col = 0; col < 8; col++)
+                {
+                    // Siyah-beyaz hücreleri konumlarına göre belirliyoruz
+                    var isBlack = (row + col) % 2 == 1;
+                    var cellClass = isBlack ? "cell black" : "cell white";
+
+                    <div class="@cellClass">
+                        @* Taşları yerleştiriyoruz (isteğe bağlı) *@
+                        @if (isBlack && (row < 3 || row > 4))
+                        {
+                            var pieceClass = row < 3 ? "piece red" : "piece blue";
+                            <div class="@pieceClass"></div>
+                        }
+                    </div>
+                }
+            }
+        }
+    </div>
+</body>
+</html>
